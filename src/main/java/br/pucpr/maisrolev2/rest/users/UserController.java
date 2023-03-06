@@ -141,7 +141,7 @@ public class UserController {
     )
     public ResponseEntity<UserLoginResponse> login(@RequestBody UserLoginRequest req) {
         var user = service.logUser(req.getUsername(), req.getPassword());
-        var token = jwt.createToken(user);
+        var token = jwt.createUserToken(user);
 
         return ResponseEntity.ok(new UserLoginResponse(token, user));
     }

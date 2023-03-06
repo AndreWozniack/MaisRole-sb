@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity @Data
 public class Contact {
-    @Id
+    @Id @GeneratedValue
     private Long id;
     private String insta;
     private String face;

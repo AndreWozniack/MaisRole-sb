@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity @Data
 public class Address {
-    @Id
+    @Id @GeneratedValue
     private Long id;
     private String street;
     private String number;

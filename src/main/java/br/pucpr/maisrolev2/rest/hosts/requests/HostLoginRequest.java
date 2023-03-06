@@ -1,4 +1,4 @@
-package br.pucpr.maisrolev2.rest.hosts;
+package br.pucpr.maisrolev2.rest.hosts.requests;
 
 import lombok.Data;
 

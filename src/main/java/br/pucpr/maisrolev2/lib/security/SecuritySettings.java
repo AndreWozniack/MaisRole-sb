@@ -1,5 +1,6 @@
 package br.pucpr.maisrolev2.lib.security;
 
+import br.pucpr.maisrolev2.rest.hosts.Host;
 import br.pucpr.maisrolev2.rest.users.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -23,4 +24,5 @@ public class SecuritySettings {
     private boolean testUserAllowed = false;
     private String token;
     private User user;
+    private Host host;
 }

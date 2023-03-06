@@ -1,16 +1,14 @@
 package br.pucpr.maisrolev2.rest.hosts;
 
-import br.pucpr.maisrolev2.lib.exception.AlreadyExistsException;
 import br.pucpr.maisrolev2.lib.exception.ExceptionHandlers;
 import br.pucpr.maisrolev2.lib.exception.NotFoundException;
 import br.pucpr.maisrolev2.lib.security.JWT;
+import br.pucpr.maisrolev2.rest.hosts.requests.HostLoginRequest;
+import br.pucpr.maisrolev2.rest.hosts.responses.HostLoginResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,33 +44,19 @@ public class HostController {
 
     @PostMapping("/register")
     @Transactional
-    public ResponseEntity<Object> add(@Valid @RequestBody Host host, BindingResult bindingResult) {
-        try {
-            if (bindingResult.hasErrors()){
-                throw new MethodArgumentNotValidException( new MethodParameter(
-                        service.getClass().getDeclaredMethod("add", Host.class), 0),
-                bindingResult);
-            }
+    public ResponseEntity<Object> add(@Valid @RequestBody Host host) {
             service.add(host);
             return new ResponseEntity<>(host, HttpStatus.CREATED);
-        } catch (AlreadyExistsException e) {
-            return exceptionHandlers.handleAlreadyExistsException(e);
-        } catch (MethodArgumentNotValidException e) {
-            return exceptionHandlers.handleValidationException(e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    /*
+
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody HostLoginRequest req) {
-        try {
-            var host = service.logHost
-        }
+    public ResponseEntity<HostLoginResponse> login(@RequestBody HostLoginRequest req) {
+            var host = service.logHost(req.getEmail(), req.getPassword());
+            var token = jwt.createHostToken(host);
+
+            return ResponseEntity.ok( new HostLoginResponse(token, host));
     }
-    
-     */
 
 
 }

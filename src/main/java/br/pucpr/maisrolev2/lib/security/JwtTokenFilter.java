@@ -16,7 +16,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        var auth = JWT.extract((HttpServletRequest) req);
+        var auth = JWT.extractUser((HttpServletRequest) req);
         if (auth == null) {
             chain.doFilter(req, res);
             return;
